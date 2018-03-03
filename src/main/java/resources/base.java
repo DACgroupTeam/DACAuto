@@ -62,12 +62,12 @@ public class base {
 	private String captureScreenshot(WebDriver driver2, String name, String resultName) throws IOException {
 		System.out.println("reached screenshot block");
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File resourcesDirectory = new File("screenshots");
-		System.out.println("File :: " + resourcesDirectory.getAbsolutePath());
-		FileUtils.copyFile(src, new File(resourcesDirectory.getAbsolutePath()+"\\" + resultName + "screenshot.png"));
+		//File resourcesDirectory = new File("screenshots");
+		System.out.println("File :: " + System.getProperty("user.dir"));
+		
 
-		//FileUtils.copyFile(src, new File("C:\\Users\\rahuln\\DACAuto\\screenshots\\" + resultName + "screenshot.png"));
-		String Imglocation = resourcesDirectory.getAbsolutePath()+"\\" + resultName + "screenshot.png";
+		FileUtils.copyFile(src, new File("C:\\Users\\rahuln\\DACAuto\\screenshots\\" + resultName + "screenshot.png"));
+		String Imglocation = "C:\\Users\\rahuln\\DACAuto\\screenshots\\" + resultName + "screenshot.png";
 		// TODO Auto-generated method stub
 		return Imglocation;
 	}
