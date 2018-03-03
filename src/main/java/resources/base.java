@@ -100,7 +100,7 @@ report.loadConfig(new File("Extent-Config.xml"));
 logger = report.startTest(this.getClass().getSimpleName()).assignCategory("Regression Testcases");
 
 // Test Case Usage: Using it at Every Step in Each Test Case
- logger.log(LogStatus.INFO,"String Message to Log for Each Step in Test Case");
+ logger.log(LogStatus.INFO,"Log for Each Step in Test Case");
 //*****************************************************************************
 
 
