@@ -20,6 +20,7 @@ import org.testng.annotations.AfterMethod;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import com.aventstack.extentreports.reporter.*;
 
 public class base {
 
@@ -36,13 +37,15 @@ public class base {
 	public void TearDown_AM(ITestResult result) throws IOException {
 		System.out.println("@After Method");
 		try {
+	
 			if (result.getStatus() == ITestResult.FAILURE) {
 				String res = captureScreenshot(driver, result.getName(), result.getName());
-				String image = logger.addScreenCapture(res);
-				System.out.println(image);
+//				String image = logger.addScreenCapture(res);
+//				System.out.println(image);
 				String TestCaseName = this.getClass().getSimpleName()
 						+ " Test Case Failure and Title/Boolean Value Failed";
-				logger.log(LogStatus.FAIL, TestCaseName + logger.addScreenCapture(res));
+				logger.log(LogStatus.FAIL, TestCaseName + logger.addScreenCapture( result.getName() + "screenshot.png"));
+				
 				// logger.log(LogStatus.FAIL, image, this.getClass().getSimpleName() + " Test
 				// Case Failure and Title/Boolean Value Failed");
 			} else if (result.getStatus() == ITestResult.SUCCESS) {
@@ -63,11 +66,12 @@ public class base {
 		System.out.println("reached screenshot block");
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		//File resourcesDirectory = new File("screenshots");
-		System.out.println("File :: " + System.getProperty("user.dir"));
+		//System.out.println("File :: " + System.getProperty("user.dir"));
+		
 		
 
-		FileUtils.copyFile(src, new File("C:\\Users\\rahuln\\DACAuto\\screenshots\\" + resultName + "screenshot.png"));
-		String Imglocation = "C:\\Users\\rahuln\\DACAuto\\screenshots\\" + resultName + "screenshot.png";
+		FileUtils.copyFile(src, new File("target/surefire-reports/" + resultName + "screenshot.png"));
+		String Imglocation = "target/surefire-reports/" + resultName + "screenshot.png";
 		// TODO Auto-generated method stub
 		return Imglocation;
 	}
