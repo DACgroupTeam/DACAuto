@@ -59,12 +59,12 @@ public class base {
 
 	}
 
-	private String captureScreenshot(WebDriver driver2, String name, String result) throws IOException {
+	private String captureScreenshot(WebDriver driver2, String name, String resultName) throws IOException {
 		System.out.println("reached screenshot block");
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
-		FileUtils.copyFile(src, new File("C://report//" + result + "screenshot.png"));
-		String Imglocation = "C://report//" + result + "screenshot.png";
+		FileUtils.copyFile(src, new File("screenshots/" + resultName + "screenshot.png"));
+		String Imglocation = "screenshots/" + resultName + "screenshot.png";
 		// TODO Auto-generated method stub
 		return Imglocation;
 	}
@@ -74,7 +74,7 @@ public class base {
 
 		prop = new Properties();
 		FileInputStream fis = new FileInputStream(
-				"C:\\Users\\rahuln\\DAC\\src\\main\\java\\resources\\data.properties");
+				"src/main/java/resources/data.properties");
 		prop.load(fis);
 		String browserName = prop.getProperty("browser");
 
