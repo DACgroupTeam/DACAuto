@@ -14,7 +14,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import resources.base;
 
-public class LoginpageTests extends base {
+public class LoginpageValidLogin extends base {
 
 	LoginPage lp;
 
@@ -24,27 +24,22 @@ public class LoginpageTests extends base {
 		lp = new LoginPage(driver);
 	}
 
-	@Test
-	public void invalid_login() {
-		try {
-			driver.get(prop.getProperty("url"));
-			lp.login().clear();
-			lp.login().sendKeys("dac_ra_beta1@dacgroup.com");
-			lp.password().clear();
-			lp.password().sendKeys("1111");
-			lp.submit().click();
-			Thread.sleep(6000);
-			logger.log(LogStatus.INFO, "asserting validation message");
-			Assert.assertEquals("Invalid Password", lp.warning().getAttribute("innerText"));
 
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+	@Test
+	public void valid_login() throws InterruptedException {
+		driver.get(prop.getProperty("url"));
+		lp.login().clear();
+		lp.login().sendKeys("dac_ra_beta1@dacgroup.com");
+		lp.password().clear();
+		lp.password().sendKeys("111111");
+		lp.submit().click();
+		Thread.sleep(6000);
+		boolean test = lp.logo().isDisplayed();
+		logger.log(LogStatus.INFO, "asserting logo displayed");
+		Assert.assertTrue(test);
 
 	}
-
-
 
 	@AfterClass
 	public void tearDownMethod() throws Exception {

@@ -8,18 +8,24 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 
@@ -37,7 +43,18 @@ public class base {
 	// Base Class Usage
 	public static ExtentReports report;
 	public static ExtentTest logger;
+	
+	@BeforeTest(alwaysRun=true)
+	public void reportSetup() throws IOException {
+	
+	// *********************************************************************************
+	report = new ExtentReports("target/surefire-reports/TestReport.html");
+	report.loadConfig(new File("Extent-Config.xml"));
 
+	}
+	
+
+	
 	// @AfterMethod
 	@AfterMethod(alwaysRun = true)
 	public void TearDown_AM(ITestResult result) throws IOException {
@@ -45,17 +62,19 @@ public class base {
 		try {
 
 			if (result.getStatus() == ITestResult.FAILURE) {
-				String res = captureScreenshot(driver, result.getName(), result.getName());
+				String res = captureScreenshot(driver, result.getName());
 				// String image = logger.addScreenCapture(res);
 				// System.out.println(image);
-				String TestCaseName = this.getClass().getSimpleName()
-						+ " Test Case Failure and Title/Boolean Value Failed";
+				String TestCaseName = this.getClass().getSimpleName()+ " Failed";
+				String methodname= result.getMethod().getMethodName();
+				logger.log(LogStatus.FAIL, methodname);
 				logger.log(LogStatus.FAIL, TestCaseName + logger.addScreenCapture(result.getName() + "screenshot.png"));
+				logger.log(LogStatus.FAIL, result.getThrowable());
 
 				// logger.log(LogStatus.FAIL, image, this.getClass().getSimpleName() + " Test
 				// Case Failure and Title/Boolean Value Failed");
 			} else if (result.getStatus() == ITestResult.SUCCESS) {
-				logger.log(LogStatus.PASS, this.getClass().getSimpleName() + " Test Case Success and Title Verified");
+				logger.log(LogStatus.PASS, this.getClass().getSimpleName() + " Test Case Success and Verified");
 			} else if (result.getStatus() == ITestResult.SKIP) {
 				logger.log(LogStatus.SKIP, this.getClass().getSimpleName() + " Test Case Skipped");
 			}
@@ -68,7 +87,7 @@ public class base {
 
 	}
 
-	private String captureScreenshot(WebDriver driver2, String name, String resultName) throws IOException {
+	private String captureScreenshot(WebDriver driver2, String resultName) throws IOException {
 		System.out.println("reached screenshot block");
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		// File resourcesDirectory = new File("screenshots");
@@ -82,24 +101,22 @@ public class base {
 	// ***************************************************************************************
 
 	public WebDriver initializeDriver() throws IOException {
-
+		
 		prop = new Properties();
 		FileInputStream fis = new FileInputStream("src/main/java/resources/data.properties");
 		prop.load(fis);
+
+		logger = report.startTest(this.getClass().getSimpleName()).assignCategory("Regression Testcases");
+
+		// Test Case Usage: Using it at Every Step in Each Test Case
+		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");
 		String browserName = prop.getProperty("browser");
 
 		// ClassLoader classLoader = getClass().getClassLoader();
 		// File file = new File(classLoader.getResource("somefile").getFile());
 		// System.out.println("ClassLoader :: "+file.getAbsolutePath());
 
-		// *********************************************************************************
-		report = new ExtentReports("target/surefire-reports/TestReport.html");
-		report.loadConfig(new File("Extent-Config.xml"));
-
-		logger = report.startTest(this.getClass().getSimpleName()).assignCategory("Regression Testcases");
-
-		// Test Case Usage: Using it at Every Step in Each Test Case
-		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");
+	
 		// *****************************************************************************
 
 		if (browserName.equals("chrome")) {
@@ -121,10 +138,17 @@ public class base {
 
 	}
 
-	public void getScreenshot(String result) throws IOException {
+//	public void getScreenshot(String result) throws IOException {
+//		System.out.println("reached screenshot block");
+//		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//		FileUtils.copyFile(src, new File("C://test//" + result + "screenshot.png"));
+//
+//	}
+	
+	public void addScreenshot(String message) throws IOException {
 		System.out.println("reached screenshot block");
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File("C://test//" + result + "screenshot.png"));
+		FileUtils.copyFile(src, new File("screenshots/"+message+".png"));
 
 	}
 
@@ -141,5 +165,40 @@ public class base {
 		ResultSet rs = s.executeQuery("Query");
 
 	}
+	
+	public void login(WebDriver driver, Properties prop)
+	{
+		//login to auth centre
+		driver.get(prop.getProperty("AuthCenterURL"));
+		WebElement Login = driver.findElement(By.xpath(prop.getProperty("Authlogin")));
+		
+		Login.sendKeys(prop.getProperty("email"));
+		WebElement Password = driver.findElement(By.xpath(prop.getProperty("Authpassword")));
+		Password.sendKeys(prop.getProperty("password"));
+		WebElement Signin = driver.findElement(By.xpath(prop.getProperty("signin")));
+		Signin.submit();
+		
+	}
+	public void navigateToDashboard(WebDriver driver, Properties prop)
+	{      
+		String oldTab = driver.getWindowHandle();
+		   WebElement email=driver.findElement(By.id(prop.getProperty("emailsearch")));
+		   email.clear();
+		   email.sendKeys(prop.getProperty("emailID"));
+		   WebElement linkToDashboard= driver.findElement(By.linkText(prop.getProperty("dashboardLink")));
+		   linkToDashboard.click();
+		   ArrayList<String> newTab = new ArrayList<String>(driver.getWindowHandles());
+		    newTab.remove(oldTab);
+		    // change focus to new tab
+		    driver.switchTo().window(newTab.get(0));
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }
