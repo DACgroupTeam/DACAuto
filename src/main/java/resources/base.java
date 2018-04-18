@@ -34,45 +34,39 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.aventstack.extentreports.reporter.*;
 
-public class base {
+public abstract class base implements IAutoconst {
+
+	static {
+		System.setProperty(IE_KEY, IE_VALUE);
+		System.setProperty(GECKO_KEY, GECKO_VALUE);
+		System.setProperty(CHROME_KEY, CHROME_VALUE);
+	}
 
 	public static WebDriver driver;
 	public Properties prop;
-
-	// ***************************************************************************************
-	// Base Class Usage
 	public static ExtentReports report;
 	public static ExtentTest logger;
+
+	//****************************Extent report
 	
-	@BeforeTest(alwaysRun=true)
+	@BeforeTest(alwaysRun = true)
 	public void reportSetup() throws IOException {
-	
-	// *********************************************************************************
-	report = new ExtentReports("target/surefire-reports/TestReport.html");
-	report.loadConfig(new File("Extent-Config.xml"));
 
+		report = new ExtentReports("target/surefire-reports/TestReport.html");
+		report.loadConfig(new File("Extent-Config.xml"));
 	}
-	
 
-	
-	// @AfterMethod
 	@AfterMethod(alwaysRun = true)
-	public void TearDown_AM(ITestResult result) throws IOException {
+	public void generateReport(ITestResult result) throws IOException {
 		System.out.println("@After Method");
 		try {
-
 			if (result.getStatus() == ITestResult.FAILURE) {
-				String res = captureScreenshot(driver, result.getName());
-				// String image = logger.addScreenCapture(res);
-				// System.out.println(image);
-				String TestCaseName = this.getClass().getSimpleName()+ " Failed";
-				String methodname= result.getMethod().getMethodName();
+				String res = Utilities.captureScreenshot(driver, result.getName());
+				String TestCaseName = this.getClass().getSimpleName() + " Failed";
+				String methodname = result.getMethod().getMethodName();
 				logger.log(LogStatus.FAIL, methodname);
 				logger.log(LogStatus.FAIL, TestCaseName + logger.addScreenCapture(result.getName() + "screenshot.png"));
 				logger.log(LogStatus.FAIL, result.getThrowable());
-
-				// logger.log(LogStatus.FAIL, image, this.getClass().getSimpleName() + " Test
-				// Case Failure and Title/Boolean Value Failed");
 			} else if (result.getStatus() == ITestResult.SUCCESS) {
 				logger.log(LogStatus.PASS, this.getClass().getSimpleName() + " Test Case Success and Verified");
 			} else if (result.getStatus() == ITestResult.SKIP) {
@@ -80,56 +74,32 @@ public class base {
 			}
 			report.endTest(logger);
 			report.flush();
-
 		} catch (Throwable t) {
 			logger.log(LogStatus.ERROR, t.fillInStackTrace());
 		}
 
 	}
 
-	private String captureScreenshot(WebDriver driver2, String resultName) throws IOException {
-		System.out.println("reached screenshot block");
-		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		// File resourcesDirectory = new File("screenshots");
-		// System.out.println("File :: " + System.getProperty("user.dir"));
-
-		FileUtils.copyFile(src, new File("target/surefire-reports/" + resultName + "screenshot.png"));
-		String Imglocation = "target/surefire-reports/" + resultName + "screenshot.png";
-		// TODO Auto-generated method stub
-		return Imglocation;
-	}
-	// ***************************************************************************************
-
+	
+	//***************** intialising  browser
+	
 	public WebDriver initializeDriver() throws IOException {
 		
 		prop = new Properties();
-		FileInputStream fis = new FileInputStream("src/main/java/resources/data.properties");
+		FileInputStream fis = new FileInputStream(CONFIG_PATH);
 		prop.load(fis);
-
 		logger = report.startTest(this.getClass().getSimpleName()).assignCategory("Regression Testcases");
-
-		// Test Case Usage: Using it at Every Step in Each Test Case
 		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");
 		String browserName = prop.getProperty("browser");
 
-		// ClassLoader classLoader = getClass().getClassLoader();
-		// File file = new File(classLoader.getResource("somefile").getFile());
-		// System.out.println("ClassLoader :: "+file.getAbsolutePath());
-
-	
-		// *****************************************************************************
-
 		if (browserName.equals("chrome")) {
-			System.setProperty("webdriver.chrome.driver", prop.getProperty("chromePath"));
 			driver = new ChromeDriver();
-			// execute in chrome driver
 
 		} else if (browserName.equals("firefox")) {
 			driver = new FirefoxDriver();
 			// firefox code
 		} else if (browserName.equals("IE")) {
 			// IE code
-			System.setProperty("webdriver.ie.driver", prop.getProperty("iePath"));
 			driver = new InternetExplorerDriver();
 		}
 
@@ -137,68 +107,36 @@ public class base {
 		return driver;
 
 	}
-
-//	public void getScreenshot(String result) throws IOException {
-//		System.out.println("reached screenshot block");
-//		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-//		FileUtils.copyFile(src, new File("C://test//" + result + "screenshot.png"));
-//
-//	}
 	
-	public void addScreenshot(String message) throws IOException {
-		System.out.println("reached screenshot block");
-		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File("screenshots/"+message+".png"));
-
-	}
-
-	// Db connection method
-	public void dbConnect(String username, String password, String Query) throws SQLException {
-		String host = "localhost";
-		String port = "3306";
-		String uname = username;
-		String pword = password;
-
-		Connection con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/databaseName", uname,
-				pword);
-		Statement s = con.createStatement();
-		ResultSet rs = s.executeQuery("Query");
-
-	}
 	
-	public void login(WebDriver driver, Properties prop)
-	{
-		//login to auth centre
+	
+	//**********************for login to auth and then Dashboard
+
+	public void loginAuth(WebDriver driver, Properties prop) {
+		// login to auth centre
 		driver.get(prop.getProperty("AuthCenterURL"));
 		WebElement Login = driver.findElement(By.xpath(prop.getProperty("Authlogin")));
-		
+
 		Login.sendKeys(prop.getProperty("email"));
 		WebElement Password = driver.findElement(By.xpath(prop.getProperty("Authpassword")));
 		Password.sendKeys(prop.getProperty("password"));
 		WebElement Signin = driver.findElement(By.xpath(prop.getProperty("signin")));
 		Signin.submit();
-		
+
 	}
-	public void navigateToDashboard(WebDriver driver, Properties prop)
-	{      
+
+	public void navigateToDashboard(WebDriver driver, Properties prop) {
 		String oldTab = driver.getWindowHandle();
-		   WebElement email=driver.findElement(By.id(prop.getProperty("emailsearch")));
-		   email.clear();
-		   email.sendKeys(prop.getProperty("emailID"));
-		   WebElement linkToDashboard= driver.findElement(By.linkText(prop.getProperty("dashboardLink")));
-		   linkToDashboard.click();
-		   ArrayList<String> newTab = new ArrayList<String>(driver.getWindowHandles());
-		    newTab.remove(oldTab);
-		    // change focus to new tab
-		    driver.switchTo().window(newTab.get(0));
-		
+		WebElement email = driver.findElement(By.id(prop.getProperty("emailsearch")));
+		email.clear();
+		email.sendKeys(prop.getProperty("emailID"));
+		WebElement linkToDashboard = driver.findElement(By.linkText(prop.getProperty("dashboardLink")));
+		linkToDashboard.click();
+		ArrayList<String> newTab = new ArrayList<String>(driver.getWindowHandles());
+		newTab.remove(oldTab);
+		// change focus to new tab
+		driver.switchTo().window(newTab.get(0));
+
 	}
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -52,7 +52,7 @@ public class VisibilityTest extends base {
 		driver = initializeDriver();
 		driver.manage().window().maximize();
 		nav = new Navpage(driver);
-		login(driver, prop); // logins to DAC
+		loginAuth(driver, prop); // logins to DAC
 		navigateToDashboard(driver, prop); // navigate to dashboard
 		// ex= new excelwrite();
 		action = new Actions(driver);

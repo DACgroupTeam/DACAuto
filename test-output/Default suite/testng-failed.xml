@@ -3,15 +3,14 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.dac.testcases.LoginpageTests">
+      <class name="com.dac.testcases.DashboardpageTest">
         <methods>
-          <include name="invalid_login"/>
-          <include name="valid_login"/>
-          <include name="tearDownMethod"/>
           <include name="setup"/>
+          <include name="tearDownMethod"/>
+          <include name="invalid_login"/>
           <include name="TearDown_AM"/>
         </methods>
-      </class> <!-- com.dac.testcases.LoginpageTests -->
+      </class> <!-- com.dac.testcases.DashboardpageTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

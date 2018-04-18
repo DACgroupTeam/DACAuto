@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: TestSuite
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 102.677 s <<< FAILURE! - in TestSuite
-invalid_login(com.dac.testcases.LoginpageTests)  Time elapsed: 78.322 s  <<< FAILURE!
-java.lang.AssertionError: expected [Invalid Password] but found [Invalid Password2]
-	at com.dac.testcases.LoginpageTests.invalid_login(LoginpageTests.java:44)
-
-valid_login(com.dac.testcases.LoginpageTests)  Time elapsed: 9.934 s  <<< FAILURE!
-java.lang.AssertionError: expected [false] but found [true]
-	at com.dac.testcases.LoginpageTests.valid_login(LoginpageTests.java:66)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 222.087 s - in TestSuite
