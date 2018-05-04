@@ -44,11 +44,11 @@ public class VisibilityPage {
 	//graph properties
 		@FindBy(css = "g.highcharts-series.highcharts-series-0>path:nth-child(4)")
 		private WebElement scoreGraph;	
-		@FindBy(css = "g.highcharts-tooltip>text>tspan:nth-child(1)")
+		@FindBy(css = "div.highcharts-label.highcharts-tooltip>span>span:nth-child(1)")
 		private WebElement scoreGraphTooltipDate;
-		@FindBy(css = "g.highcharts-tooltip>text>tspan:nth-child(2)")
+		@FindBy(css = "div.highcharts-label.highcharts-tooltip>span>span:nth-child(2)")
 		private WebElement scoreGraphTooltiploctns;
-		@FindBy(css = "g.highcharts-tooltip>text>tspan:nth-child(3)")
+		@FindBy(css = "div.highcharts-label.highcharts-tooltip>span>span:nth-child(3)")
 		private WebElement scoreGraphTooltipScore;
 		
 		

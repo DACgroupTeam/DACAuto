@@ -3,14 +3,15 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.dac.testcases.DashboardpageTest">
+      <class name="com.dac.testcases.VisibilityTest">
         <methods>
-          <include name="setup"/>
+          <include name="veriy_VisibilityReport"/>
           <include name="tearDownMethod"/>
-          <include name="invalid_login"/>
-          <include name="TearDown_AM"/>
+          <include name="reportSetup"/>
+          <include name="generateReport"/>
+          <include name="setup"/>
         </methods>
-      </class> <!-- com.dac.testcases.DashboardpageTest -->
+      </class> <!-- com.dac.testcases.VisibilityTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
