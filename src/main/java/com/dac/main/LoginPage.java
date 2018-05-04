@@ -7,22 +7,20 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 
-	WebDriver driver;
-
+	
 	public LoginPage(WebDriver driver) {
-		// Initializing constructor
-		this.driver = driver;
+		
 		PageFactory.initElements(driver, this);
 	}
 
 	@FindBy(id = "txt_username")
-	WebElement login;
+	WebElement unTB;
 
 	@FindBy(id = "txt_password")
-	WebElement password;
+	WebElement pwTB;
 
 	@FindBy(id = "btlogin")
-	WebElement submit;
+	WebElement loginBTN;
 
 	@FindBy(xpath = "//div[@id='errordiv1']/span")
 	WebElement warning;
@@ -30,16 +28,24 @@ public class LoginPage {
 	@FindBy(xpath = "//img[@src='http://res.cloudinary.com/cloudasset/image/upload/v1461602331/map/images/f5o8ptkieiv15gbih1jc.png']")
 	WebElement logo;
 
-	public WebElement login() {
-		return login;
+	public void clearUserName() {
+		unTB.clear();
+	}
+	
+	public void setUserName(String un) {
+		unTB.sendKeys(un);
 	}
 
-	public WebElement password() {
-		return password;
+	public void clearPassword() {
+		pwTB.clear();
+	}
+	
+	public void setPassword(String pw) {
+		pwTB.sendKeys(pw);
 	}
 
-	public WebElement submit() {
-		return submit;
+	public void clickLogin() {
+		loginBTN.click();
 	}
 
 	public WebElement warning() {

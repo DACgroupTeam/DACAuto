@@ -23,45 +23,26 @@ import org.w3c.dom.Document;
 
 import com.dac.main.Dashboardpage;
 import com.dac.main.LoginPage;
-import com.dac.main.Navpage;
+import com.dac.main.Navigationpage;
 import com.dac.main.VisibilityPage;
 import com.relevantcodes.extentreports.LogStatus;
 
 import resources.Writetoexcel;
-import resources.base;
+import resources.BaseTest;
 import resources.wordwrite;
 
-public class VisibilityTest extends base {
+public class VisibilityTest extends BaseTest {
 
-	Navpage nav;
-
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	Date date = new Date();
-	String time = sdf.format(date);
+	Navigationpage nav;
 	Dashboardpage Dp;
 	VisibilityPage Vp;
-	JavascriptExecutor js;
-	Actions action;
 	String locationNo;
 	String visibilityScore;
 	
-	
-
-	@BeforeClass
-	public void setup() throws IOException {
-		driver = initializeDriver();
-		driver.manage().window().maximize();
-		nav = new Navpage(driver);
-		loginAuth(driver, prop); // logins to DAC
-		navigateToDashboard(driver, prop); // navigate to dashboard
-		// ex= new excelwrite();
-		action = new Actions(driver);
-		js = (JavascriptExecutor) driver;
-	}
-
 	 @Test(priority=1)
 	 public void veriy_DashboardKPIScore() throws Exception {
 	 try {
+	
 	
 	 Dp= new Dashboardpage(driver);
 	 Thread.sleep(20000);
@@ -81,6 +62,9 @@ public class VisibilityTest extends base {
 	@Test(priority=2)
 	public void veriy_VisibilityReport() throws Exception {
 		try {
+			
+			Actions action = new Actions(driver);
+			JavascriptExecutor js = (JavascriptExecutor) driver;
 			
 			Vp = new VisibilityPage(driver);
 			nav.getVisibility().click();
@@ -195,12 +179,6 @@ public class VisibilityTest extends base {
 
 	}
 
-	@AfterClass
-	public void tearDownMethod() throws Exception {
-		// Create an object of current class
-		driver.quit();
-		driver = null;
 
-	}
 
 }

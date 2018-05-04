@@ -7,25 +7,22 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Dashboardpage {
 
-	WebDriver driver;
-
 	public Dashboardpage(WebDriver driver) {
-		// Initializing constructor
-		this.driver = driver;
+		
 		PageFactory.initElements(driver, this);
 	}
 
 	@FindBy(xpath = "(//div[@class='infobox-data']/span)[1]")
-	WebElement Locations;
+	private WebElement Locations;
 
 	@FindBy(xpath = "(//div[@class='infobox-data']/span)[2]")
-	WebElement Visibility;
+	private WebElement Visibility;
 
 	@FindBy(xpath = "(//div[@class='infobox-data']/span)[3]")
-	WebElement Accuracy;
-
-
-
+	private WebElement Accuracy;
+	
+	
+	
 	public WebElement getLocations() {
 		return Locations;
 	}
@@ -38,8 +35,5 @@ public class Dashboardpage {
 		return Accuracy;
 	}
 	
-	
-	
-	
-	
+		
 }
