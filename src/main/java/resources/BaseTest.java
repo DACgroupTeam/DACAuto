@@ -87,7 +87,7 @@ public abstract class BaseTest implements IAutoconst {
 		System.out.println("@After Method");
 		try {
 			if (result.getStatus() == ITestResult.FAILURE) {
-				String res = Utilities.captureScreenshot(driver, result.getName());
+				String res = Utilities.captureScreenshot(driver, result.getName(), true);
 				String TestCaseName = this.getClass().getSimpleName() + " Failed";
 				String methodname = result.getMethod().getMethodName();
 				logger.log(LogStatus.FAIL, methodname);

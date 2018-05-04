@@ -11,10 +11,16 @@ import org.openqa.selenium.WebDriver;
 public class Utilities {
 	
 	
-	public static String captureScreenshot(WebDriver driver, String resultName) throws IOException {
+	public static String captureScreenshot(WebDriver driver, String resultName, boolean b) throws IOException {
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File("target/surefire-reports/" + resultName + "screenshot.png"));
-		String Imglocation = "target/surefire-reports/" + resultName + "screenshot.png";
+		String Imglocation = "./Screenshot/" + resultName + "screenshot.png";
+		File screenshot= new File(Imglocation);
+		FileUtils.copyFile(src, screenshot);			
+		if (b=true)
+		{
+			File dest= new File("target/surefire-reports/" + resultName + "screenshot.png");
+			FileUtils.copyFile(screenshot , dest);
+		}
 		return Imglocation;
 	}
 	

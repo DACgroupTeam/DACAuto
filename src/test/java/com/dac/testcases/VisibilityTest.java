@@ -67,6 +67,7 @@ public class VisibilityTest extends BaseTest {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			
 			Vp = new VisibilityPage(driver);
+			nav = new Navigationpage(driver);
 			nav.getVisibility().click();
 			logger.log(LogStatus.INFO, "Navigated to visibility page");
 			Thread.sleep(20000);
