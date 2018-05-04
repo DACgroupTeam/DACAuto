@@ -1,6 +1,7 @@
 package com.dac.main;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -16,8 +17,11 @@ public class Navigationpage extends BasePage{
 
 	Actions action;
 	WebDriverWait wait;
+	WebDriver driver;
+	JavascriptExecutor js;
 	
 	public Navigationpage(WebDriver driver) {
+		this.driver=driver;
 		action=new Actions(driver);
 		wait=new WebDriverWait(driver, 60);
 		PageFactory.initElements(driver, this);
@@ -121,16 +125,29 @@ public class Navigationpage extends BasePage{
 		return Visibility;
 	}
 	
-	public void clickCampaigns() {
-		CampaignsLink.click();
+	/** To click on Campaigns link in LHS to navigate to Campaigns page  */
+	public void clickCampaigns() {    
+		
+		int yloc=CampaignsLink.getLocation().getY();
+		js=(JavascriptExecutor)driver;
+		js.executeScript("window.scrollTo(0, "+yloc+")");
+		action.moveToElement(CampaignsLink).click().perform();
 	}
 	
 	public void clickResponses() {
-		ResponsesLink.click();
+		
+		int yloc=ResponsesLink.getLocation().getY();
+		js=(JavascriptExecutor)driver;
+		js.executeScript("window.scrollTo(0, "+yloc+")");
+		action.moveToElement(ResponsesLink).click().perform();
 	}
 	
 	public void clickReports() {
-		ResponsesLink.click();
+		
+		int yloc=ReportsLink.getLocation().getY();
+		js=(JavascriptExecutor)driver;
+		js.executeScript("window.scrollTo(0, "+yloc+")");
+		action.moveToElement(ReportsLink).click().perform();
 	}
      
 	public void click_DB_Lang_Link() {

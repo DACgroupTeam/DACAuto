@@ -1,5 +1,7 @@
 package com.dac.main;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,6 +36,7 @@ public class Campaigns_DBEnglish_Page extends BasePage{
 	private WebElement Select_ProcessedCampaignStatus;
 	
 	public void click_CreateCampaignBTN() {
+		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		CreateCampaignBTN.click();
 	}
 	

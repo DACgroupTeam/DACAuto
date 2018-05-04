@@ -16,6 +16,7 @@ public class Verify_Camp_Procesed extends BaseTest{
 	public void Processed_Camp_Test() {
 		
 		Navigationpage NP=new Navigationpage(driver);
-		NP.clickCampaigns();
+		NP.clickReports();
+		
 	}
 }
