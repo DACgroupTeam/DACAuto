@@ -19,16 +19,20 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class wordwrite {
 
-		// TODO Auto-generated method stub
 		
+		
+	private static final String callerClassName = new Exception().getStackTrace()[1].getClassName();
+	private static final String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH_mm").format(Calendar.getInstance().getTime());
+
 			
-			
+			//To DO write a method to read image file names from excel and call the method from function below to get Image names
 			public void creatDoc(ArrayList<String> imgnames) throws IOException, InvalidFormatException {
 				
 				XWPFDocument doc = new XWPFDocument();
 				XWPFParagraph p = doc.createParagraph();
 		 
 				XWPFRun r = p.createRun();
+				
 	  for (String image: imgnames)
 	  {
 			File img1 = new File("screenshots/"+image+".png");
@@ -58,8 +62,10 @@ public class wordwrite {
 		//r.addPicture(new FileInputStream(img2), imgFormat2, imgFile2, Units.toEMU(500), Units.toEMU(200));
 			
 	  }
-	 
-			FileOutputStream out = new FileOutputStream("screenshots/word_images2.docx");
+	  		String callerClassName = new Exception().getStackTrace()[1].getClassName();
+	  		String timeStamp = new SimpleDateFormat("yyyyMMdd_HH_mm").format(Calendar.getInstance().getTime());
+
+			FileOutputStream out = new FileOutputStream("test_evidence/"+callerClassName+"-"+timeStamp+".docx");
 			doc.write(out);
 			
 			out.close();
