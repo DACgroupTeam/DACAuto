@@ -132,6 +132,7 @@ public class Navigationpage extends BasePage{
 		js=(JavascriptExecutor)driver;
 		js.executeScript("window.scrollTo(0, "+yloc+")");
 		action.moveToElement(CampaignsLink).click().perform();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='btn-group']/a")));
 	}
 	
 	public void clickResponses() {
