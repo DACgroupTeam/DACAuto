@@ -13,10 +13,15 @@ import resources.BaseTest;
 public class Verify_Camp_Procesed extends BaseTest{
 	
 	@Test
-	public void Processed_Camp_Test() {
+	public void Processed_Camp_Test() throws InterruptedException {
 		
 		Navigationpage NP=new Navigationpage(driver);
-		NP.clickReports();
+		NP.clickCampaigns();
+		Thread.sleep(50000);
+
+		Campaigns_DBEnglish_Page CP=new Campaigns_DBEnglish_Page(driver);
+		CP.click_CreateCampaignBTN();
+	
 		
 	}
 }

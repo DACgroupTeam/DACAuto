@@ -6,10 +6,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class Campaigns_DBEnglish_Page extends BasePage{
 
 	WebDriver driver;
+	
+	public Campaigns_DBEnglish_Page(WebDriver driver2) {
+		// TODO Auto-generated constructor stub
+		this.driver = driver2;
+		PageFactory.initElements(driver2, this);
+	}
+
 	
 	@FindBy(xpath="//div[@class='btn-group']//a")
 	private WebElement CreateCampaignBTN;
@@ -35,12 +43,14 @@ public class Campaigns_DBEnglish_Page extends BasePage{
 	@FindBy(xpath="(//select[contains(@ng-model,'Active')])[2]")
 	private WebElement Select_ProcessedCampaignStatus;
 	
+
 	public void click_CreateCampaignBTN() {
-		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
 		CreateCampaignBTN.click();
 	}
 	
 	public void click_ScheduledTab() {
+		
 		ScheduledTab.click();
 	}
 	
