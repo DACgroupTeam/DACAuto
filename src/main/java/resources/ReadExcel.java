@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -32,7 +33,7 @@ public class ReadExcel {
 		
 	}
 
-	public void getCellData(String sheetName, String colName, int rowNum, String searchKey) {
+	public ArrayList<String[]> getTestcases(String sheetName, String colName, int rowNum, String searchKey) {
 		try {
 			int col_Num = -1;
 			int row_Num = -1;
@@ -91,7 +92,7 @@ public class ReadExcel {
 				row = sheet.getRow(i);
 				
 				if (row==null){
-					System.out.println("row null");
+					// check whether its an empty row
 					break;
 				}
 				cell = row.getCell(testStep_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -101,20 +102,22 @@ public class ReadExcel {
 					
 					testStep = row.getCell(testStep_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
 					
-					System.out.println(testStep);
+				
 					expctedRsult = row.getCell(expctedRsult_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
-					System.out.println(expctedRsult);
+			
 					scrnCaptrNeed = row.getCell(scrnCaptrNeed_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
 					
-					System.out.println(scrnCaptrNeed);
+					
 					String Step[] = {testStep, expctedRsult, scrnCaptrNeed};
 					
 					arrayofSteps.add(Step);
 				}
 			}
-
 			
-			System.out.println(arrayofSteps);
+			return arrayofSteps;
+			
+			
+		        
 			/*
 			 * Then read data from next cell(Steps) and next cell (Expected result) and next
 			 * cell (Screenscapture required?) If screenscapture required yes then find the
@@ -153,5 +156,6 @@ public class ReadExcel {
 			e.printStackTrace();
 			//return "row " + rowNum + " or column " + colName + " does not exist  in Excel";
 		}
+		return arrayofSteps;
 	}
 }
