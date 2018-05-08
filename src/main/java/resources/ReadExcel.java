@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -21,6 +22,7 @@ public class ReadExcel {
 	public XSSFSheet sheet = null;
 	public XSSFRow row = null;
 	public XSSFCell cell = null;
+	ArrayList<String[]> arrayofSteps;
 	
 
 	public ReadExcel(String xlFilePath) throws Exception {
@@ -61,8 +63,9 @@ public class ReadExcel {
 				if (row.getCell(col_Num).getStringCellValue().trim().equalsIgnoreCase(searchKey)) 
 				{
 					testcase_row_Num = i;
+					System.out.println("search key found");
 					break;
-				}else System.out.println("not found search key");
+				}
 
 			}
 
@@ -75,7 +78,10 @@ public class ReadExcel {
 
 			/* Declare a two dimensional array to store cell steps and expected value */
 			
-			ArrayList<String[]> arrayofSteps = new ArrayList<String[]>();
+			 arrayofSteps = new ArrayList<String[]>();
+			arrayofSteps.clear();
+
+	
 
 			for (int i = testcase_row_Num + 1; i < sheet.getLastRowNum(); i++)
 
@@ -83,30 +89,30 @@ public class ReadExcel {
 				// from excel and adding to array list
 
 				row = sheet.getRow(i);
-				Cell = row.getCell(testStep_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				if (cell==null) {
-					// This cell is empty
+				
+				if (row==null){
+					System.out.println("row null");
 					break;
-				} else {
+				}
+				cell = row.getCell(testStep_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+				if (null!=cell) {
 					
 				
 					
-					testStep = (row.getCell(testStep_col)== null||row.getCell(testStep_col).getStringCellValue().equalsIgnoreCase(""))?
-								"" : row.getCell(testStep_col).getStringCellValue();
+					testStep = row.getCell(testStep_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
 					
+					System.out.println(testStep);
+					expctedRsult = row.getCell(expctedRsult_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
+					System.out.println(expctedRsult);
+					scrnCaptrNeed = row.getCell(scrnCaptrNeed_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
 					
-					expctedRsult = (row.getCell(expctedRsult_col)== null||row.getCell(expctedRsult_col).getStringCellValue().equalsIgnoreCase(""))?
-							"" : row.getCell(expctedRsult_col).getStringCellValue();
-					
-					scrnCaptrNeed = (row.getCell(scrnCaptrNeed_col)== null||row.getCell(scrnCaptrNeed_col).getStringCellValue().equalsIgnoreCase(""))?
-							"" : row.getCell(scrnCaptrNeed_col).getStringCellValue();
-					
-
-					String Step[] = { testStep, expctedRsult, scrnCaptrNeed };
+					System.out.println(scrnCaptrNeed);
+					String Step[] = {testStep, expctedRsult, scrnCaptrNeed};
 					
 					arrayofSteps.add(Step);
 				}
 			}
+
 			
 			System.out.println(arrayofSteps);
 			/*
