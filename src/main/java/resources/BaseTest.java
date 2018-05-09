@@ -27,6 +27,7 @@ import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -57,6 +58,7 @@ public abstract class BaseTest implements IAutoconst {
 	public static ExtentReports report;
 	public static ExtentTest logger;
 	public static ExtentTest parent;
+	
 
 	//****************************Extent report
 	

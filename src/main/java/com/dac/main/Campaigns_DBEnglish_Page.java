@@ -12,10 +12,10 @@ public class Campaigns_DBEnglish_Page extends BasePage{
 
 	WebDriver driver;
 	
-	public Campaigns_DBEnglish_Page(WebDriver driver2) {
-		// TODO Auto-generated constructor stub
-		this.driver = driver2;
-		PageFactory.initElements(driver2, this);
+	public Campaigns_DBEnglish_Page(WebDriver driver) {
+		
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
 	}
 
 	

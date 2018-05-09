@@ -1,5 +1,6 @@
 package com.dac.main;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,6 +10,8 @@ import org.testng.Reporter;
 
 public class BasePage {
 	
+	
+		
 	/**
 	public void verifyPageIsDisplayed(WebDriver driver,String eResult) {
 		String sETO=AutoUtil.getProperty(IAutoConst.CONFIG_PATH, "ETO");
@@ -33,5 +36,12 @@ public class BasePage {
 		Assert.assertEquals(aText, eText);
 	}
 	
-
+	public void scrollByElement(WebElement element,WebDriver driver) {
+		
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		int yLoc = element.getLocation().getY();
+		int xLoc = element.getLocation().getX();
+		js=(JavascriptExecutor)driver;
+		js.executeScript("window.scrollTo("+xLoc+", "+yLoc+")");
+	}
 }
