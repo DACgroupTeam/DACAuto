@@ -2,6 +2,7 @@ package resources;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -126,11 +127,19 @@ public abstract class BaseTest implements IAutoconst {
 	}
 
 	
-	public WebDriver openBrowser(String browser) throws IOException {
+	public WebDriver openBrowser(String browser)  {
 		
 		prop = new Properties();
-		FileInputStream fis = new FileInputStream(CONFIG_PATH);
-		prop.load(fis);
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(CONFIG_PATH);
+			prop.load(fis);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.log(LogStatus.FAIL, "Property file not found");
+			e.printStackTrace();
+			
+		}
 		
 		String className= this.getClass().getSimpleName();
 		logger = report.startTest(className).assignCategory("Regression Testcases for "+ browser);

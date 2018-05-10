@@ -29,8 +29,8 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import resources.Writetoexcel;
 import resources.BaseTest;
-import resources.wordwrite;
 
+import resources.ReadExcel;
 public class VisibilityTest extends BaseTest {
 
 	Navigationpage nav;
@@ -38,12 +38,13 @@ public class VisibilityTest extends BaseTest {
 	VisibilityPage Vp;
 	String locationNo;
 	String visibilityScore;
+	ReadExcel re;
 	
 	 @Test(priority=1)
 	 public void veriy_DashboardKPIScore() throws Exception {
 	 try {
 	
-	
+	re.getTestcases(locationNo, locationNo, 0, locationNo);
 	 Dp= new Dashboardpage(driver);
 	 Thread.sleep(20000);
 	
