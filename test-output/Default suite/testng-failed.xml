@@ -6,10 +6,11 @@
       <class name="com.dac.testcases.VisibilityTest">
         <methods>
           <include name="veriy_VisibilityReport"/>
-          <include name="tearDownMethod"/>
+          <include name="setup"/>
+          <include name="generateNode"/>
           <include name="reportSetup"/>
           <include name="generateReport"/>
-          <include name="setup"/>
+          <include name="closenode"/>
         </methods>
       </class> <!-- com.dac.testcases.VisibilityTest -->
     </classes>
