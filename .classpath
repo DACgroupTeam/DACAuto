@@ -23,5 +23,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/wasim/Downloads/AutoItX4Java.jar"/>
+	<classpathentry kind="lib" path="C:/Users/wasim/Downloads/jacob-1.18/jacob-1.18/jacob.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

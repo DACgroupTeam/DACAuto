@@ -55,6 +55,12 @@
       <scope>test</scope>
     </dependency>
     
+    <dependency>
+   		 <groupId>com.sikulix</groupId>
+   		 <artifactId>sikulixapi</artifactId>
+   	 	 <version>LATEST</version>
+	</dependency>
+    
     <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 <dependency>
     <groupId>org.apache.commons</groupId>
