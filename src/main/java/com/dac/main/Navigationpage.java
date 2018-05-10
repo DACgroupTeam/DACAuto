@@ -11,19 +11,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-import com.mysql.jdbc.Driver;
-
 public class Navigationpage extends BasePage{
 
 	Actions action;
+	JavascriptExecutor js;
 	WebDriverWait wait;
 	WebDriver driver;
-	JavascriptExecutor js;
 	
 	public Navigationpage(WebDriver driver) {
+		
 		this.driver=driver;
+		wait=new WebDriverWait(driver, 20);
 		action=new Actions(driver);
-		wait=new WebDriverWait(driver, 60);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -128,26 +127,20 @@ public class Navigationpage extends BasePage{
 	/** To click on Campaigns link in LHS to navigate to Campaigns page  */
 	public void clickCampaigns() {    
 		
-		int yloc=CampaignsLink.getLocation().getY();
-		js=(JavascriptExecutor)driver;
-		js.executeScript("window.scrollTo(0, "+yloc+")");
+		scrollByElement(CampaignsLink, driver);
 		action.moveToElement(CampaignsLink).click().perform();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='btn-group']/a")));
 	}
 	
 	public void clickResponses() {
 		
-		int yloc=ResponsesLink.getLocation().getY();
-		js=(JavascriptExecutor)driver;
-		js.executeScript("window.scrollTo(0, "+yloc+")");
+		scrollByElement(ResponsesLink, driver);
 		action.moveToElement(ResponsesLink).click().perform();
 	}
 	
 	public void clickReports() {
 		
-		int yloc=ReportsLink.getLocation().getY();
-		js=(JavascriptExecutor)driver;
-		js.executeScript("window.scrollTo(0, "+yloc+")");
+		scrollByElement(ReportsLink, driver);
 		action.moveToElement(ReportsLink).click().perform();
 	}
      

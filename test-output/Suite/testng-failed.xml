@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
-  <listeners>
-    <listener class-name="com.dac.testcases.listeners"/>
-  </listeners>
   <test thread-count="5" name="Test(failed)">
     <classes>
-      <class name="com.dac.testcases.LoginpageTests">
+      <class name="com.dac.testcases.Verify_Camp_Procesed">
         <methods>
-          <include name="invalid_login"/>
-          <include name="valid_login"/>
-          <include name="tearDownMethod"/>
+          <include name="Processed_Camp_Test"/>
           <include name="setup"/>
-          <include name="TearDown_AM"/>
+          <include name="generateNode"/>
+          <include name="reportSetup"/>
+          <include name="generateReport"/>
+          <include name="closenode"/>
+          <include name="closeBrowser"/>
         </methods>
-      </class> <!-- com.dac.testcases.LoginpageTests -->
+      </class> <!-- com.dac.testcases.Verify_Camp_Procesed -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

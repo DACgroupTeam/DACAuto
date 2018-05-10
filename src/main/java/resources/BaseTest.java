@@ -51,6 +51,7 @@ public abstract class BaseTest implements IAutoconst {
 		System.setProperty(IE_KEY, IE_VALUE);
 		System.setProperty(GECKO_KEY, GECKO_VALUE);
 		System.setProperty(CHROME_KEY, CHROME_VALUE);
+				
 	}
 
 	public static WebDriver driver;
@@ -118,6 +119,7 @@ public abstract class BaseTest implements IAutoconst {
 	public void setup(@Optional("Chrome")String browser) throws IOException {
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 		driver.manage().deleteAllCookies();
 		loginAuth(driver, prop); //logins to DAC
 		navigateToDashboard(driver, prop); //navigate to dashboard
