@@ -7,8 +7,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Dashboardpage {
 
+	WebDriver driver;
+	
 	public Dashboardpage(WebDriver driver) {
-		
+		this.driver=driver;
 		PageFactory.initElements(driver, this);
 	}
 

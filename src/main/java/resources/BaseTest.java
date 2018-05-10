@@ -28,6 +28,7 @@ import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -51,6 +52,7 @@ public abstract class BaseTest implements IAutoconst {
 		System.setProperty(IE_KEY, IE_VALUE);
 		System.setProperty(GECKO_KEY, GECKO_VALUE);
 		System.setProperty(CHROME_KEY, CHROME_VALUE);
+				
 	}
 
 	public static WebDriver driver;
@@ -58,6 +60,7 @@ public abstract class BaseTest implements IAutoconst {
 	public static ExtentReports report;
 	public static ExtentTest logger;
 	public static ExtentTest parent;
+	
 
 	//****************************Extent report
 	
@@ -88,7 +91,7 @@ public abstract class BaseTest implements IAutoconst {
 		System.out.println("@After Method");
 		try {
 			if (result.getStatus() == ITestResult.FAILURE) {
-				String res = Utilities.captureScreenshot(driver, result.getName(), true);
+				String res = Utilities.captureScreenshot(driver, result.getName());
 				String TestCaseName = this.getClass().getSimpleName() + " Failed";
 				String methodname = result.getMethod().getMethodName();
 				logger.log(LogStatus.FAIL, methodname);
@@ -117,6 +120,7 @@ public abstract class BaseTest implements IAutoconst {
 	public void setup(@Optional("Chrome")String browser) throws IOException {
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 		driver.manage().deleteAllCookies();
 		loginAuth(driver, prop); //logins to DAC
 		navigateToDashboard(driver, prop); //navigate to dashboard

@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 
 import com.dac.main.Dashboardpage;
-import com.dac.main.LoginPage;
+
 import com.dac.main.Navigationpage;
 import com.dac.main.VisibilityPage;
 import com.relevantcodes.extentreports.LogStatus;
@@ -68,7 +68,7 @@ public class VisibilityTest extends BaseTest {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			
 			Vp = new VisibilityPage(driver);
-			nav = new Navigationpage(driver);
+			nav= new Navigationpage(driver);
 			nav.getVisibility().click();
 			logger.log(LogStatus.INFO, "Navigated to visibility page");
 			Thread.sleep(20000);

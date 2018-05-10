@@ -1,13 +1,30 @@
 package com.dac.main;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Campaigns_DBEnglish_Page extends BasePage{
 
 	WebDriver driver;
+	Actions action;
+	WebDriverWait wait;
+	
+	public Campaigns_DBEnglish_Page(WebDriver driver) {
+		
+		this.driver = driver;
+		wait = new WebDriverWait(driver, 35);
+		action=new Actions(driver);
+		PageFactory.initElements(driver, this);
+	}
+
 	
 	@FindBy(xpath="//div[@class='btn-group']//a")
 	private WebElement CreateCampaignBTN;
@@ -33,11 +50,18 @@ public class Campaigns_DBEnglish_Page extends BasePage{
 	@FindBy(xpath="(//select[contains(@ng-model,'Active')])[2]")
 	private WebElement Select_ProcessedCampaignStatus;
 	
-	public void click_CreateCampaignBTN() {
+
+	/** Use Thread.sleep atleast for 5000 millisec before invoking this method 
+	 * @throws InterruptedException */
+	public void click_CreateCampaignBTN() throws InterruptedException {
+
+		Thread.sleep(5000);
 		CreateCampaignBTN.click();
+		//action.moveToElement(CreateCampaignBTN).click(CreateCampaignBTN).perform();
 	}
 	
 	public void click_ScheduledTab() {
+		
 		ScheduledTab.click();
 	}
 	
