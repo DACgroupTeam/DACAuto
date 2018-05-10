@@ -5,8 +5,6 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Test;
 
 import com.dac.main.Campaigns_DBEnglish_Page;
@@ -46,12 +44,12 @@ public class Verify_Camp_Procesed extends BaseTest{
 		
 		//newCampaign.clickUploadLogo("C:\\Users\\wasim\\git\\DACAuto\\logo.jpeg");
 			
-		Thread.sleep(5000);
+		/*Thread.sleep(5000);
 		AutoItX x=new AutoItX();
 		x.winWaitActive("Open");
 		x.controlFocus("Open", "", "Edit1");
 		x.ControlSetText("Open", "", "Edit1", filePath);
-		x.controlClick("Open", "", "Button1");
+		x.controlClick("Open", "", "Button1");*/
 		//Runtime.getRuntime().exec("C:\\Users\\wasim\\Downloads\\AutoIt Script\\Logo upload Script.exe");
 		
 		Thread.sleep(5000);
